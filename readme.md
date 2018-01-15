@@ -6,7 +6,11 @@ Welcome to my virtual desktop! :computer:
 
 TODO:
 - [ ] change website depending on the day of the week
-- [ ] random videos
+- [ ] Add more desktops and [shitybattlestations](https://imgur.com/r/shittybattlestations)
+- [ ] randomise videos
+- [ ] build [calender](https://support.google.com/calendar/answer/41207?hl=en) (would be good if people could add events)
+- [ ] build [clock](http://freefrontend.com/css-clocks/)
+- [ ] add a plane for the desk and add three.js custom geometries with [physics](http://chandlerprall.github.io/Physijs/examples/shapes.html)
 
 ## running locally
 
