@@ -1,26 +1,58 @@
 # same site different day
 
-Welcome to my virtual desktop! :computer:
+A website where people watch a user submitted playlist of youtube videos
 
-![screenshot](screenshot.jpg)
+## Theoretical operation
+- user loads page
+- client gets playlist from server
+- client renders playlist to the view
+- client works out which video to play
+- client works out elapsed time by taking the submission time off the present
+time
+- client takes the video id and elapsed time and requests the video at that time
+stamp
+- client renders video
+- video plays
+- client works out when video will end
+- client works out which video to play next
+- client waits till the video ends and loads next video
 
-TODO:
-- [ ] change website depending on the day of the week
-- [ ] Add more desktops and [shitybattlestations](https://imgur.com/r/shittybattlestations)
-- [ ] randomise videos
-- [ ] build [calender](https://support.google.com/calendar/answer/41207?hl=en) (would be good if people could add events)
-- [ ] build [clock](http://freefrontend.com/css-clocks/)
-- [ ] add a plane for the desk and add three.js custom geometries with [physics](http://chandlerprall.github.io/Physijs/examples/shapes.html)
+- user submits an entry to the playlist
+- client takes the entry and checks if it is a valid url
+- if it isn't the client returns a message to the user
+- if it is the client sends it to the server with the time of submission
+- the server adds it to the database
+- the server returns that something has changed on its database
+- the client goes through getting the playlist again and rendering it
 
-## running locally
 
-- make sure [node.js](http://nodejs.org) is at version >= `6`
-- `npm i spike -g`
-- clone this repo down and `cd` into the folder
-- run `npm install`
-- run `spike watch` or `spike compile`
+## Design Principles:
+- Videos cant be skipped paused or scrubbed
+- Everyone sees the same playlist
+- Videos are always added to the end of the playlist
+- Only single videos can be submitted not playlists
 
-## Testing
-Tests are located in `test/**` and are powered by [ava](https://github.com/sindresorhus/ava)
-- `npm install` to ensure devDeps are installed
-- `npm test` to run test suite
+
+```
+View                                                          Database
+                                                               +---------------------------------+
++-----------------------------------+                          |            Playlist             |
+|    +------------------------+     |                          |   +-------------------------+   |
+|    |                        |     |                          |   |                         |   |
+|    |       Video            | <----------------+             |   |                         |   |
+|    |                        |     |            |             |   |                         |   |
+|    +------------------------+     |            +-----------------+ Video ID (URL) - String |   |
+|    +------------------------+     |                          |   |  Order in list - Number |   |
+|    |                        |     |                          |   |         Played - Boolean|   |
+|    |      Submission Form   +----------------------------------> |   Time started - number |   |
+|    |                        |     |                          |   |    (and added)          |   |
+|    |                        |     |                          |   |         Length - Number |   |
+|    +------------------------+     |                          |   | Title of video - String |   |
+|    +------------------------+     |                          |   |                         |   |
+|    |       Playlist         |     |                          |   |                         |   |
+|    |                        | <----------------------------------+                         |   |
+|    |                        |     |                          |   |                         |   |
+|    +------------------------+     |                          |   |                         |   |
++-----------------------------------+                          |   +-------------------------+   |
+                                                               +---------------------------------+
+```
